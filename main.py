@@ -6,6 +6,8 @@ from starknet_py.net.client_models import Call
 from starknet_py.hash.selector import get_selector_from_name
 from starknet_py.cairo.felt import decode_shortstring
 from web3 import Web3
+from web3 import AsyncWeb3
+from web3.middleware import async_geth_poa_middleware
 import requests
 from config import *
 import asyncio
@@ -42,7 +44,14 @@ async def evm():
     total = 0
     symbol = ''
 
-    web3 = Web3(Web3.HTTPProvider(rpc))
+    if 'zora' in rpc:
+        proxies = {'all': f'http://' + proxy, }
+        request_kwargs = {"proxies": proxies, "timeout": 120}
+
+        web3 = Web3(Web3.HTTPProvider(rpc, request_kwargs=request_kwargs))
+    else:
+        web3 = Web3(Web3.HTTPProvider(rpc))
+
     if not web3.is_connected():
         print("RPC doesn't work :(")
         return
@@ -61,7 +70,6 @@ async def evm():
         except KeyError:
             pass
 
-
     price = get_price(symbol)
     print(f'\nWallets: {len(wallets)}  |  Token: {symbol}  |  Price: {price} $\n')
 
@@ -71,7 +79,8 @@ async def evm():
         try:
             public = Web3.to_checksum_address(i)
         except ValueError:
-            print('The wallet is not valid, you are probably trying to use Starknet wallets. Change the variable in the config or replace the wallets.')
+            print(
+                'The wallet is not valid, you are probably trying to use Starknet wallets. Change the variable in the config or replace the wallets.')
             return
 
         nonce = web3.eth.get_transaction_count(public)
@@ -84,12 +93,13 @@ async def evm():
             humanReadable = float(web3.from_wei(balance, "ether"))
 
         total += float(humanReadable)
-        print(f'{n:^3} | {public} | Transactions: {nonce:^4} | Balance: {humanReadable:.7f} {symbol} ({float(humanReadable * price):.3f} $)')
+        print(
+            f'{n:^3} | {public} | Transactions: {nonce:^4} | Balance: {humanReadable:.7f} {symbol} ({float(humanReadable * price):.3f} $)')
 
         with open('res.txt', 'a') as res:
-            res.write(f'{n:^4} | {public} | Transactions: {nonce:^4} | Balance: {humanReadable:.7f} {symbol} ({float(humanReadable * price):.3f} $)\n')
+            res.write(
+                f'{n:^4} | {public} | Transactions: {nonce:^4} | Balance: {humanReadable:.7f} {symbol} ({float(humanReadable * price):.3f} $)\n')
         time.sleep(.2)
-
 
     print(f'\nTotal balance: {total:.10} ({float(total * price):.3f} $)')
 
@@ -125,7 +135,8 @@ async def stark():
         try:
             nonce = await client.get_contract_nonce(wallet)
         except ClientError:
-            print('The wallet is not valid, you are probably trying to use EVM wallets. Change the variable in the config or replace the wallets.')
+            print(
+                'The wallet is not valid, you are probably trying to use EVM wallets. Change the variable in the config or replace the wallets.')
             return
 
         balance = await client.call_contract(
@@ -137,10 +148,12 @@ async def stark():
             block_number='latest',
         )
         total += balance[0] / 10 ** decimals
-        print(f'{n:^3} | {wallet} | Transactions: {nonce:^4} | Balance: {balance[0] / 10 ** decimals:.7f} {symbol} ({float((balance[0] / 10 ** decimals) * price):.3f} $)')
+        print(
+            f'{n:^3} | {wallet} | Transactions: {nonce:^4} | Balance: {balance[0] / 10 ** decimals:.7f} {symbol} ({float((balance[0] / 10 ** decimals) * price):.3f} $)')
 
         with open('res.txt', 'a') as res:
-            res.write(f'{n:^3} | {wallet} | Transactions: {nonce:^4} | Balance: {balance[0] / 10 ** decimals:.7f} {symbol} ({float((balance[0] / 10 ** decimals) * price):.3f} $)')
+            res.write(
+                f'{n:^3} | {wallet} | Transactions: {nonce:^4} | Balance: {balance[0] / 10 ** decimals:.7f} {symbol} ({float((balance[0] / 10 ** decimals) * price):.3f} $)')
         time.sleep(.2)
 
     print(f'\nTotal balance: {total:.7} ({float(total * price):.3f} $)')
