@@ -3,7 +3,7 @@ what = 'evm' #  evm | stark
 
 
 ### Настройки для EVM
-rpc = 'https://rpc.zora.energy'  # RPC сути в которой будет поиск. Ниже в файле есть варианты, но можно юзать любые (но не все, пробуйте крч)
+rpc = 'https://rpc.zkfair.io'  # RPC сути в которой будет поиск. Ниже в файле есть варианты, но можно юзать любые (но не все, пробуйте крч)
 check_native = True  # True - есть будем проверять нативку, иначе False
 nft = False  # True - есть ищем NFT, иначе False
 token_for_check = '0x00000'  # Если check_native = False, надо вставить контракт
@@ -24,6 +24,7 @@ node_url = 'https://starknet-mainnet.public.blastapi.io'  # RPC. Если буд
 # Avalance - https://avalanche-c-chain-rpc.publicnode.com
 # Polygon  - https://polygon-bor-rpc.publicnode.com
 # Scroll   - https://scroll-mainnet.public.blastapi.io
+# zkFair   - https://rpc.zkfair.io
 # Zora     - https://rpc.zora.energy
 proxy = 'login:pass@ip:port' # использовать http прокси
 
