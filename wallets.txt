@@ -1,3 +1,0 @@
-wallet1
-wallet2
-...

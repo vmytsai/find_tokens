@@ -1,33 +1,15 @@
 ### Выбрать evm или stark
 what = 'evm' #  evm | stark
 
-
 ### Настройки для EVM
-rpc = 'https://rpc.zkfair.io'  # RPC сути в которой будет поиск. Ниже в файле есть варианты, но можно юзать любые (но не все, пробуйте крч)
+custom_rpc = ""  # RPC сети в которой будет поиск
 check_native = True  # True - есть будем проверять нативку, иначе False
 nft = False  # True - есть ищем NFT, иначе False
 token_for_check = '0x00000'  # Если check_native = False, надо вставить контракт
 
 ### Настройки для Starknet
-contract_addr = '0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d'  # Контракт токена который ищем, ниже есть несколько вариантов
+contract_addr = '0x049D36570D4e46f48e99674bd3fcc84644DdD6b96F7C741B1562B82f9e004dC7'  # Контракт токена который ищем, ниже есть несколько вариантов
 node_url = 'https://starknet-mainnet.public.blastapi.io'  # RPC. Если будешь часто юзать иди на инфуру и бери себе RPC (infura.io)
-
-
-### Трошки RPC для evm (юзать можно почти все сети):
-# Ethereum - https://ethereum-rpc.publicnode.com
-# Optimism - https://optimism-rpc.publicnode.com
-# Arbitrum - https://arbitrum-one-rpc.publicnode.com
-# zkSync   - https://mainnet.era.zksync.io
-# Linea    - https://linea.decubate.com
-# Base     - https://base-rpc.publicnode.com
-# BSC      - https://bsc-rpc.publicnode.com
-# Avalance - https://avalanche-c-chain-rpc.publicnode.com
-# Polygon  - https://polygon-bor-rpc.publicnode.com
-# Scroll   - https://scroll-mainnet.public.blastapi.io
-# zkFair   - https://rpc.zkfair.io
-# Zora     - https://rpc.zora.energy
-proxy = 'login:pass@ip:port' # использовать http прокси
-
 
 ### Контракты для старка:
 # ETH:  0x049D36570D4e46f48e99674bd3fcc84644DdD6b96F7C741B1562B82f9e004dC7
